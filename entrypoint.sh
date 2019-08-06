@@ -2,7 +2,7 @@
 
 # the first argument provided is a comma-separated list of all ZooKeeper servers in the ensemble:
 export ZOOKEEPER_SERVERS=$1
-# the second argument provided is vat of this ZooKeeper node:
+# the second argument provided is that of this ZooKeeper node:
 export ZOOKEEPER_ID=$2
 
 # create data and blog directories:
@@ -17,9 +17,9 @@ ZOOKEEPER_CONFIG=
 ZOOKEEPER_CONFIG="$ZOOKEEPER_CONFIG"$'\n'"tickTime=$tickTime"
 ZOOKEEPER_CONFIG="$ZOOKEEPER_CONFIG"$'\n'"dataDir=$dataDir"
 ZOOKEEPER_CONFIG="$ZOOKEEPER_CONFIG"$'\n'"dataLogDir=$dataLogDir"
-ZOOKEEPER_CONFIG="$ZOOKEEPER_CONFIG"$'\n'"clientPort=$clientPort"
 ZOOKEEPER_CONFIG="$ZOOKEEPER_CONFIG"$'\n'"initLimit=$initLimit"
 ZOOKEEPER_CONFIG="$ZOOKEEPER_CONFIG"$'\n'"syncLimit=$syncLimit"
+ZOOKEEPER_CONFIG="$ZOOKEEPER_CONFIG"$'\n'"standaloneEnabled=false"
 # Put all ZooKeeper server IPs into an array:
 IFS=', ' read -r -a ZOOKEEPER_SERVERS_ARRAY <<< "$ZOOKEEPER_SERVERS"
 export ZOOKEEPER_SERVERS_ARRAY=$ZOOKEEPER_SERVERS_ARRAY
@@ -33,7 +33,7 @@ do
         # if IP's are used instead of hostnames, every ZooKeeper host has to specify itself as follows
         ZKIP=0.0.0.0
     fi
-    ZOOKEEPER_CONFIG="$ZOOKEEPER_CONFIG"$'\n'"server.$ZKID=$ZKIP:2888:3888"
+    ZOOKEEPER_CONFIG="$ZOOKEEPER_CONFIG"$'\n'"server.$ZKID=$ZKIP:2888:3888:participant;$clientPort"
 done
 # Finally, write config file:
 echo "$ZOOKEEPER_CONFIG" | tee conf/zoo.cfg
