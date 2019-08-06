@@ -12,9 +12,9 @@ EXPOSE 2181 2888 3888
 # Install and set everything up
 RUN apt-get install -y wget tar
 RUN \
-   wget -q -N https://www.apache.org/dist/zookeeper/$BIN_VERSION/apache-${BIN_VERSION}.tar.gz \
-&& tar --strip-components=1 -C /usr/share/zookeeper -xvf apache-${BIN_VERSION}.tar.gz \
-&& rm apache-${BIN_VERSION}.tar.gz \
+   wget -q -N https://www.apache.org/dist/zookeeper/$BIN_VERSION/apache-${BIN_VERSION}-bin.tar.gz \
+&& tar --strip-components=1 -C /usr/share/zookeeper -xvf apache-${BIN_VERSION}-bin.tar.gz \
+&& rm apache-${BIN_VERSION}-bin.tar.gz \
 && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # default parameters for config file:
